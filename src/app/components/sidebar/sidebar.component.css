@@ -1,0 +1,113 @@
+.menu {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  overflow: hidden;
+}
+.menu > li {
+  border-bottom: 1px solid #edf1f7;
+}
+.menu > li:first-child {
+  border-top: none;
+}
+.menu > li > a {
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  color: #222b45;
+}
+
+mat-icon {
+  margin-right: 5px;
+  color: #8f9bb3;
+}
+
+.menu > li:hover > a,
+.menu > li:hover > a > mat-icon {
+  color: #598bff;
+}
+.menu > li > a.active,
+.menu > li > a.active > mat-icon {
+  color: #36f;
+}
+
+.menu {
+  display: block;
+}
+
+.accordion {
+  font-weight: 600;
+  vertical-align: middle;
+  background-color: #ffffff;
+  padding: 17px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 13.2px;
+}
+
+.panel {
+  display: none;
+  padding: 0 18px;
+  background-color: white;
+  overflow: hidden;
+}
+
+.panel ul {
+  list-style: none;
+  padding: 0;
+}
+
+.panel li {
+  padding: 10px;
+}
+
+.panel a {
+  text-decoration: none;
+}
+.accordion :hover {
+  color: #36f;
+}
+
+/* .menu > button.active > mat-icon {
+  color: #36f;
+} */
+
+.sub-menu {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #222b45;
+  display: flex;
+}
+
+.sub-menu :hover {
+  color: #36f;
+}
+
+.menu > ul > li:hover > a > mat-icon {
+  color: #598bff;
+}
+.menu  > ul > li > a.active,
+.menu  > ul > li > a.active > mat-icon {
+  color: #36f;
+}
+
+.list > li > a.active,
+.list > li > a.active > mat-icon {
+  color: #36f;
+}
+
+.list > li {
+  border-bottom: 1px solid #edf1f7;
+}
+.list > li:first-child {
+  border-top: none;
+}
+
+
+

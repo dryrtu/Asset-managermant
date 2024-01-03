@@ -1,0 +1,80 @@
+<div style="background-color: #ffffff;width: 500px; height: 710px">
+    <h2 style="font-weight: 500;">Tìm kiếm nâng cao</h2>
+    <hr>
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+        <div class="text-group" style="margin-bottom: 20px">
+            <label>Mã tài sản</label>
+            <input type="text" class="form-control" name="nameOfPlanList" formControlName="itemCode"/>
+        </div>
+
+
+        <div class="text-group" style="margin-bottom: 20px">
+            <label> Tên tài sản</label>
+            <input type="text" class="form-control" name="nameOfPlanList" formControlName="nameAsset"/>
+        </div>
+
+        <div class="text-group" style="margin-bottom: 20px">
+            <label> Tên kế hoạch mua sắm</label>
+            <input type="text" class="form-control" name="nameOfPlanList" formControlName="nameOfPlanList"/>
+        </div>
+
+        <div class="text-group" style="margin-bottom: 20px">
+            <label>Nhà cung cấp</label>
+            <input type="text" class="form-control" name="nameOfPlanList" formControlName="supplierName"/>
+        </div>
+
+        <div style="margin-bottom: 20px">
+            <label>Thời hạn license</label>
+            <div class="date-group">
+                <input style="width: 45%" type="date" class="date-control" name="createdDateStart"
+                       formControlName="licenseDateStart"/>
+                <input style="width: 45%" type="date" class="date-control" name="createdDateEnd"
+                       formControlName="licenseDateEnd"/>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px">
+            <label>Thời hạn bảo hành</label>
+            <div class="date-group">
+                <input style="width: 45%" type="date" class="date-control" name="approvedDateStart"
+                       formControlName="warrantyPeriodStart"/>
+                <input style="width: 45%" type="date" class="date-control" name="approvedDateEnd"
+                       formControlName="warrantyPeriodEnd"/>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px" class="row">
+            <label style="margin-bottom: 10px">Trạng thái</label>
+            <div class="check-group">
+                <div class="col-4">
+                    <input type="checkbox" id="ACTICE" value="ACTIVE" formControlName="assetStatus1"
+                           (change)="checkAll()">
+                    <label style="font-weight: 400; margin-left: 5px" for="ACTICE"> Active</label>
+                </div>
+                <div class="col-4">
+                    <input type="checkbox" id="INACTIVE" value="INACTIVE" formControlName="assetStatus2"
+                           (change)="checkAll()">
+                    <label style="font-weight: 400; margin-left: 5px" for="INACTIVE"> Inactive</label>
+                </div>
+                <div class="col-4">
+                    <input type="checkbox" id="ALL" name="nhap" [(ngModel)]="selectAll" (click)="toggleAllCheckboxes()"
+                           [ngModelOptions]="{standalone: true}">
+                    <label style="font-weight: 400; margin-left: 5px" for="ALL"> Tất cả</label>
+                </div>
+            </div>
+        </div>
+<hr>
+        <div style="display: flex; justify-content: space-between">
+            <div class="btn-group" class="d-flex justify-content-between">
+                <a class="btn" style="background-color: #ffffff; color: #064d69; border-color: #064d69" (click)="new()">Làm
+                    mới</a>
+            </div>
+
+            <div class="btn-group" class="d-flex justify-content-between">
+                <button class="btn" style="background-color: #064d69; color: #ffffff" type="submit">Tìm kiếm</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+

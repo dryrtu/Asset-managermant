@@ -1,0 +1,163 @@
+<div>
+  <div class="header-container" style="margin-bottom: 20px">
+    <div class="header-title">KẾ HOẠCH MUA SẮM</div>
+  </div>
+
+  <div style="padding: 20px; background-color: #ffffff; border-radius: 5px">
+    <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Thông tin kế hoạch mua sắm</div>
+    <div class="row">
+      <div class="col-2">
+        <p style="font-weight: 500;">Năm thực hiện <span style="color: red">*</span></p>
+        <p style=" margin-top: 35px; font-weight: 500;">Tên kế hoạch mua sắm <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10" style="vertical-align: middle;">
+        <div>
+          <input disabled style=" height: 35px;" type="text" class="check form-control" [(ngModel)]="planListDetail.planList[0].year" name="year"/>
+        </div>
+        <div style="display: flex;">
+          <input disabled style=" height: 35px; margin-top: 15px" type="text" class="check form-control" [(ngModel)]="planListDetail.nameOfPlanList" name="nameOfPlanList"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="position: relative; margin-top: 30px; background-color: #ffffff; border-radius: 5px">
+    <div style="padding: 20px;">
+      <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Danh sách mua sắm</div>
+      <div>
+        <table class="table table-hover bg-table-header" style="width: 100%">
+          <thead style="vertical-align: middle; text-align: center" class="table-secondary">
+          <tr>
+            <th style="width: 7%">STT</th>
+            <th style="width: 68%">Tên hàng hóa/dịch vụ</th>
+            <th style="width: 15%">Phân loại</th>
+            <th style="width: 10%">Hành động</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngIf="shoppingPlanList.length > 0; else noData">
+            <tr *ngFor="let product of shoppingPlanList; let i = index">
+              <td style="text-align: center">{{ i + 1 }}</td>
+              <td>{{ product.productName }}</td>
+              <td>{{ product.productTypeDetails[0].productTypes[0].type }}</td>
+              <td style="text-align: center">
+                <input type="radio" name="selectedProduct" [value]="product.id" (change)="showProduct($event)">
+                <button class="btn btnedit" title="Xóa danh mục" (click)="deleteShoppingPlan(product.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #noData>
+            <tr>
+              <td colspan="8" style="text-align: center">Không có dữ liệu</td>
+            </tr>
+          </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div style="position: relative; margin-top: 30px; background-color: #ffffff; border-radius: 5px">
+    <div style="padding: 20px;">
+      <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Thông tin chi tiết danh mục</div>
+      <div>
+        <form *ngIf="showProduct">
+          <div class="row">
+
+            <div class="col-2"><label> Tên sản phẩm <span style="color: red">*</span> </label></div>
+            <div class="col-10">
+              <input disabled type="text" class="check form-control" [(ngModel)]="shoppingPlan.productName" name="productName"/>
+            </div>
+
+            <div class="col-2">
+              <label> Phân loại <span style="color: red">*</span></label>
+            </div>
+            <div class="col-10">
+              <input disabled style=" height: 35px;" type="text" class="check form-control" [(ngModel)]="shoppingPlan.productTypeDetails[0].productTypes[0].type" name="type"/>
+            </div>
+
+            <div class="col-2">
+              <label> Nhóm sản phẩm <span style="color: red">*</span></label>
+            </div>
+            <div class="col-10">
+              <input disabled style=" height: 35px;" type="text" class="check form-control" [(ngModel)]="shoppingPlan.productTypeDetails[0].typeDetail" name="typeDetail"/>
+
+            </div>
+
+            <div class="col-2">
+              <label> Đơn vị tính <span style="color: red">*</span></label>
+            </div>
+            <div class="col-10">
+              <input disabled style=" height: 35px;" type="text" class="check form-control" [(ngModel)]="shoppingPlan.units[0].unitName" name="unitName"/>
+
+            </div>
+
+            <div class="col-2">
+              <label> Số lượng <span style="color: red">*</span></label>
+            </div>
+            <div class="col-10">
+              <input disabled style=" height: 35px;" type="text" class="check form-control" [(ngModel)]="shoppingPlan.quantity" name="quantity"/>
+
+            </div>
+
+            <div class="col-2">
+              <label> Đơn giá dự kiến</label>
+            </div>
+            <div class="col-7">
+              <input disabled style="height: 35px;" type="text" class="check form-control" [ngModel]="shoppingPlan.expectedPrice | currency:'VND':'symbol':'1.0-0':'vi-VN'" name="expectedPrice" />
+
+            </div>
+
+            <div class="col-3">
+              <input disabled style=" height: 35px;" type="text" class="check form-control" [(ngModel)]="shoppingPlan.currencies[0].currencyUnit" name="currencyUnit"/>
+
+            </div>
+
+            <div class="col-2">
+              <label> Thành tiền</label>
+            </div>
+            <div class="col-7">
+              <input type="text" class="form-control" [value]="shoppingPlan.quantity * shoppingPlan.expectedPrice | currency:'VND':'symbol':'1.0-0':'vi-VN'" disabled />
+            </div>
+
+
+            <div class="col-3">
+              <input disabled style=" height: 35px;" type="text" class="check form-control" [(ngModel)]="shoppingPlan.currencies[0].currencyUnit" name="currencyUnit"/>
+
+            </div>
+
+            <div class="col-2">
+              <label> Mô tả </label>
+            </div>
+            <div class="col-10">
+              <textarea type="text" class="form-control" [(ngModel)]="shoppingPlan.description" name="description" disabled></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <div style=" margin-top: 30px; background-color: #ffffff; border-radius: 5px; display: flex; justify-content: space-between;">
+    <div class="m-t-20 text-right" style="padding: 20px;">
+      <button class="btn" style="background-color: #ffffff; color: #908d8d" type="submit">
+        < Quay lại
+      </button>
+    </div>
+    <div style="display: flex">
+      <div class="m-t-20 text-right" style="padding: 20px;">
+        <button class="btn" style="background-color: #ee7e0f; color: #ffffff" type="submit" (click)="exportToExcel()">
+          Xuất Excel
+        </button>
+      </div>
+      <div  class="m-t-20 text-right" style="padding-top: 20px; padding-right: 20px">
+        <button *ngIf="userRole === 'ADMIN'" class="btn" style="background-color: #064d69; color: #ffffff" type="submit" (click)="changePlanListStatusToApproved(planListDetail.id)">
+          Phê duyệt
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,217 @@
+<div>
+  <div class="header-container" style="margin-bottom: 20px">
+    <div class="header-title">KẾ HOẠCH MUA SẮM</div>
+    <div>
+      <a [routerLink]="['/admin/tao-danh-muc-mua-sam']">
+        <button mat-raised-button class="btn" style="background-color: #064d69; color: #ffffff">
+          <span>Tạo mới +</span>
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <div style="
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
+    ">
+    <div style="display: flex; padding: 20px; justify-content: space-between">
+      <form [formGroup]="searchForm" *ngIf="userRole === 'ADMIN'" (ngSubmit)="search1()">
+      <div style="display: flex">
+        <div class="form-group" style="margin-left: 10px; width: 250px">
+          <input type="text" style="width: 250px" class="check form-control" placeholder="Năm" formControlName="year"/>
+        </div>
+
+
+        <div class="form-group" style="margin-left: 10px; width: 250px">
+            <input type="text" style="width: 250px" class="check form-control" placeholder="Tên kế hoạch mua sắm" formControlName="nameOfPlanList"/>
+          </div>
+
+          <div class="form-group" style="margin-left: 10px" >
+            <button class="btn" style="
+              vertical-align: middle;
+              text-align: center;
+              background-color: #064d69;
+              color: #ffffff;
+            " type="submit">
+              <span>Tìm kiếm</span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <form [formGroup]="searchForm" *ngIf="userRole !== 'ADMIN'" (ngSubmit)="search()">
+        <div style="display: flex">
+          <div class="form-group" style="margin-left: 10px; width: 250px">
+            <input type="text" style="width: 250px" class="check form-control" placeholder="Năm" formControlName="year"/>
+          </div>
+
+          <div class="form-group" style="margin-left: 10px; width: 250px">
+            <input type="text" style="width: 250px" class="check form-control" placeholder="Tên kế hoạch mua sắm" formControlName="nameOfPlanList"/>
+          </div>
+
+          <div class="form-group" style="margin-left: 10px" >
+            <button class="btn" style="
+              vertical-align: middle;
+              text-align: center;
+              background-color: #064d69;
+              color: #ffffff;
+            " type="submit">
+              <span>Tìm kiếm</span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div style="display: flex">
+        <div class="form-group" style="margin-left: 20px">
+          <button type="submit" class="btn" style="
+              vertical-align: middle;
+              text-align: center;
+              border-color: #064d69;
+              color: #064d69;
+            " (click)="openDialogSearch()">
+            Tìm kiếm nâng cao
+          </button>
+        </div>
+
+        <div class="form-group" style="margin-left: 20px">
+          <button class="btn" style="
+              vertical-align: middle;
+              text-align: center;
+              border-color: #064d69;
+              color: #064d69;
+            " (click)="exportToExcel()">
+            <span>Xuất Excel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; padding-right: 20px">
+      <div class="">
+        <table class="table" style="width: 100%">
+          <thead style="vertical-align: middle" class="table-secondary">
+            <tr>
+              <th style="width: 5%">STT</th>
+              <th style="width: 10%">Năm thực hiện</th>
+              <th style="width: 32%">Tên kế hoạch mua sắm</th>
+              <th style="width: 12%">Ngày tạo</th>
+              <th style="width: 12%">Ngày phê duyệt</th>
+              <th style="width: 12%">Trạng thái</th>
+              <th style="width: 17%">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="planListDetail.length > 0; else noData">
+              <tr *ngFor="let nameOfPlanList of planListDetail; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ nameOfPlanList.planList[0].year }}</td>
+                <td>{{ nameOfPlanList.nameOfPlanList }}</td>
+                <td>{{ nameOfPlanList.createdDate | date : "dd/MM/yyyy" }}</td>
+                <td>{{ nameOfPlanList.approvedDate | date : "dd/MM/yyyy" }}</td>
+                <td>
+                  <div [style.width.px]="130" [style.height.px]="30" [style.background-color]="
+                      nameOfPlanList.planListDetailStatus === 'Nháp'
+                        ? '#E8E6E2'
+                        : nameOfPlanList.planListDetailStatus ===
+                          'Chờ phê duyệt'
+                        ? '#FDE6AA'
+                        : nameOfPlanList.planListDetailStatus === 'Đã phê duyệt'
+                        ? '#D0FCDF'
+                        : nameOfPlanList.planListDetailStatus ===
+                          'Từ chối phê duyệt'
+                        ? '#FC5F69'
+                        : ''
+                    " [style.color]="
+                      nameOfPlanList.planListDetailStatus === 'Nháp'
+                        ? '#574F49'
+                        : nameOfPlanList.planListDetailStatus ===
+                          'Chờ phê duyệt'
+                        ? '#FB7A03'
+                        : nameOfPlanList.planListDetailStatus === 'Đã phê duyệt'
+                        ? '#1EA744'
+                        : nameOfPlanList.planListDetailStatus ===
+                          'Từ chối phê duyệt'
+                        ? '#F2E3E5'
+                        : ''
+                    " style="
+                      border-radius: 15px;
+                      text-align: center;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                    ">
+                    {{ nameOfPlanList.planListDetailStatus }}
+                  </div>
+                </td>
+                <td>
+                  <!-- Xem danh sách sản phẩm trong kế hoạch -->
+                  <button class="btn" [routerLink]="'/admin/xem-danh-muc-mua-sam/'+ nameOfPlanList.id" title="Xem chi tiết">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+
+                  <!-- Chỉnh sửa danh sách sản phẩm -->
+                  <button class="btn" *ngIf="
+                      userRole !== 'ADMIN' &&
+                      (nameOfPlanList.planListDetailStatus ===
+                        'Từ chối phê duyệt' ||
+                        nameOfPlanList.planListDetailStatus === 'Nháp')
+                    " [routerLink]="'/admin/chinh-sua-danh-muc-mua-sam/'+ nameOfPlanList.id" title="Chỉnh sửa kế hoạch">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+
+                  <!-- Xóa sản phẩm -->
+                  <button class="btn" *ngIf="
+                      userRole !== 'ADMIN' &&
+                      (nameOfPlanList.planListDetailStatus ===
+                        'Từ chối phê duyệt' ||
+                        nameOfPlanList.planListDetailStatus === 'Nháp')
+                    " (click)="deletePlanListDetail(nameOfPlanList.id)" title="Xóa sản phẩm">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+
+                  <!-- Gửi yêu cầu cho ADMIN phê duyệt sản phẩm -->
+                  <button class="btn" *ngIf="
+                      userRole !== 'ADMIN' &&
+                      (nameOfPlanList.planListDetailStatus === 'Nháp' || nameOfPlanList.planListDetailStatus === 'Từ chối phê duyệt')
+                    " (click)="changePlanListStatusToPending(nameOfPlanList.id)"
+                    title="Gửi yêu cầu phê duyệt sản phẩm">
+                    <mat-icon>forward</mat-icon>
+                  </button>
+
+                  <!-- Dành cho admin phê duyệt sản phẩm -->
+                  <button class="btn" *ngIf="
+                      userRole === 'ADMIN' &&
+                      nameOfPlanList.planListDetailStatus === 'Chờ phê duyệt'
+                    " (click)="changePlanListStatusToApproved(nameOfPlanList.id)" title="Phê duyệt sản phẩm">
+                    <mat-icon>check</mat-icon>
+                  </button>
+
+                  <!-- Dành cho admin từ chối phê duyệt -->
+                  <button class="btn" *ngIf="
+                        (userRole === 'ADMIN' && nameOfPlanList.planListDetailStatus === 'Chờ phê duyệt')
+                      " (click)="changeProductStatusToCancelled(nameOfPlanList.id)"
+                    title="Từ chối phê duyệt">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+
+                </td>
+              </tr>
+            </ng-container>
+            <ng-template #noData>
+              <tr>
+                <td colspan="8" style="text-align: center">Không có dữ liệu</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+
+      <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex" *ngIf="userRole !== 'ADMIN'"
+        (page)="onPageChange($event)"></mat-paginator>
+      <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex" *ngIf="userRole === 'ADMIN'"
+                     (page)="onPageChange1($event)"></mat-paginator>
+    </div>
+  </div>
+</div>

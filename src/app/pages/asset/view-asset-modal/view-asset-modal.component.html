@@ -1,0 +1,292 @@
+<div>
+  <div class="header-container" style="margin-bottom: 20px">
+    <div class="header-title">THÔNG TIN TÀI SẢN</div>
+  </div>
+
+  <div style="padding: 20px; background-color: #ffffff; border-radius: 5px">
+    <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Thông tin tài sản</div>
+    <div class="row">
+      <div class="col-2">
+        <label>Mã tài sản </label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" disabled [(ngModel)]="asset.itemCode"/>
+      </div>
+
+      <div class="col-2">
+        <label>Phiên bản </label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="quantity" placeholder="v1.0" disabled/>
+      </div>
+
+      <div class="col-2">
+        <label>Mã tài sản (kế toán) </label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="assetName" disabled [(ngModel)]="asset.itemCodeKt"/>
+      </div>
+
+      <div class="col-2">
+        <p>Năm thực hiện <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <input disabled style=" height: 35px;" type="text" class="check form-control"
+               [(ngModel)]="asset.shoppingPlan.planListDetails[0].planList[0].year" name="year"/>
+      </div>
+
+      <div class="col-2">
+        <p>Tên kế hoạch mua sắm <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <input disabled style=" height: 35px; margin-top: 15px" type="text" class="check form-control"
+               [(ngModel)]="asset.shoppingPlan.planListDetails[0].nameOfPlanList" name="nameOfPlanList"/>
+      </div>
+
+      <div class="col-2">
+        <p>Tên hàng hóa/dịch vụ (theo Kế hoạch mua sắm) <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <input disabled style=" height: 35px; margin-top: 15px" type="text" class="check form-control"
+               [(ngModel)]="asset.shoppingPlan.productName" name="productName"/>
+      </div>
+
+      <div class="col-2">
+        <label>Tên tài sản </label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="assetName" disabled [(ngModel)]="asset.assetName"/>
+      </div>
+
+      <div class="col-2">
+        <p>Loại tài sản <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" disabled
+               [(ngModel)]="asset.shoppingPlan.productTypeDetails[0].productTypes[0].type" name="type"/>
+      </div>
+
+      <div class="col-2">
+        <p>Nhóm tài sản <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" disabled
+               [(ngModel)]="asset.shoppingPlan.productTypeDetails[0].typeDetail" name="typeDetail"/>
+      </div>
+
+      <div class="col-2">
+        <label>Thông số kỹ thuật <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="specifications" disabled
+               [(ngModel)]="asset.specifications"/>
+      </div>
+
+      <div class="col-2">
+        <p>Xuất xứ <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="productOrigin" disabled [(ngModel)]="asset.productOrigin"/>
+      </div>
+
+      <div class="col-2">
+        <label>Serial <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="serial" disabled [(ngModel)]="asset.serial"/>
+      </div>
+
+      <div class="col-2">
+        <label>Mô tả thêm </label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="description" disabled [(ngModel)]="asset.description"/>
+      </div>
+
+      <div class="col-2">
+        <p>Đơn vị tính <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <input disabled style=" height: 35px;" type="text" class="check form-control"
+               [(ngModel)]="asset.units[0].unitName" name="unitName"/>
+      </div>
+
+      <div class="col-2">
+        <label>Số lượng <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <input type="number" class="check form-control" name="quantity" disabled [(ngModel)]="asset.quantity"/>
+      </div>
+
+      <div class="col-2">
+        <label>Đơn giá <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <input type="number" class="check form-control" name="price" disabled [(ngModel)]="asset.price"/>
+      </div>
+
+      <div class="col-2">
+        <p>Phân loại license <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <input disabled style=" height: 35px;" type="text" class="check form-control"
+               [(ngModel)]="asset.assetLicenceStatus"  name="licenseType"/>
+      </div>
+
+
+      <div class="col-2">
+        <label>Thời hạn license <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <ng-container *ngIf="asset.licenceDuration as date">
+          <input class="check form-control" name="licenceDuration" disabled
+                 [ngModel]="date | date:'dd/MM/yyyy'" />
+        </ng-container>
+      </div>
+
+      <div class="col-2">
+        <label>Ngày bắt đầu sử dụng <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <ng-container *ngIf="asset.dayStartedUsing as date">
+          <input class="check form-control" name="dayStartedUsing" readonly
+                 [ngModel]="date | date:'dd/MM/yyyy'" />
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div style="position: relative; margin-top: 30px; background-color: #ffffff; border-radius: 5px">
+    <div style="padding: 20px;">
+      <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Thông tin hợp đồng</div>
+      <div class="row">
+        <div class="col-2"><label>Mã hợp đồng <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="contractName" disabled
+                                    [(ngModel)]="asset.contracts[0].contractName"/>
+        </div>
+
+        <div class="col-2"><label>Tên hợp đồng <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="contractCode" disabled
+                                   [(ngModel)]="asset.contracts[0].contractCode"/>
+        </div>
+
+        <div class="col-2"><label>Link svn lưu trữ hợp đồng <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="archiveLink" disabled
+                                  [(ngModel)]="asset.contracts[0].archiveLink"/>
+        </div>
+
+        <div class="col-2"><label>Ngày bắt đầu hợp đồng <span style="color: red">*</span> </label></div>
+        <div class="col-10">
+          <ng-container *ngIf="asset.contracts[0].contractStartDate as date">
+            <input class="check form-control" name="contractStartDate" disabled
+                   [ngModel]="date | date:'dd/MM/yyyy'" />
+          </ng-container>
+        </div>
+
+        <div class="col-2"><label>Ngày kết thúc hợp đồng <span style="color: red">*</span> </label></div>
+        <div class="col-10">
+          <ng-container *ngIf="asset.contracts[0].contractEndDate as date">
+            <input class="check form-control" name="contractEndDate" disabled
+                   [ngModel]="date | date:'dd/MM/yyyy'" />
+          </ng-container>
+        </div>
+
+        <div class="col-2"><label>Thời gian bảo hành <span style="color: red">*</span> </label></div>
+        <div class="col-7"><input type="number" class="check form-control" name="warrantyPeriod" disabled
+                                  [(ngModel)]="asset.contracts[0].warrantyPeriod"/>
+        </div>
+        <div class="col-3"><input type="text" class="check form-control" value="Tháng" disabled/>
+        </div>
+
+        <div class="col-2"><label>Ngày bắt đầu bảo hành <span style="color: red">*</span> </label></div>
+        <div class="col-10">
+          <ng-container *ngIf="asset.contracts[0].warrantyStartDate as date">
+            <input class="check form-control" name="warrantyStartDate" disabled
+                   [ngModel]="date | date:'dd/MM/yyyy'" />
+          </ng-container>
+        </div>
+
+        <div class="col-2"><label>Ngày kết thúc bảo hành <span style="color: red">*</span> </label></div>
+        <div class="col-10">
+          <ng-container *ngIf="asset.contracts[0].warrantyEndDate as date">
+            <input class="check form-control" name="warrantyEndDate" disabled
+                   [ngModel]="date | date:'dd/MM/yyyy'" />
+          </ng-container>
+        </div>
+
+        <div class="col-2"><label>Đính kèm </label></div>
+        <div class="col-10"><input type="text" class="check form-control" placeholder="Chọn file đính kèm"
+                                 disabled  name="attachedFiles" [(ngModel)]="asset.contracts[0].attachedFiles"/>
+        </div>
+
+        <div class="col-2">
+          <label> Nhà cung cấp <span style="color: red">*</span></label>
+        </div>
+        <div class="col-10">
+          <input type="text" class="check form-control" disabled
+                 name="supplierName" [(ngModel)]="asset.contracts[0].suppliers[0].supplierName"/>
+        </div>
+
+        <div class="col-2"><label>Địa chỉ <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="supplierAddress" disabled
+                                   [(ngModel)]="asset.contracts[0].suppliers[0].address"/>
+        </div>
+
+        <div class="col-2"><label>Thông tin liên hệ <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="contact" disabled
+                                   [(ngModel)]="asset.contracts[0].suppliers[0].contact"/>
+        </div>
+
+        <div class="col-2">
+          <label> Trạng thái hợp đồng <span style="color: red">*</span></label>
+        </div>
+        <div class="col-10">
+          <input type="text" class="check form-control" name="contractStatus" disabled [(ngModel)]="asset.contracts[0].contractStatus"/>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div style="position: relative; margin-top: 30px; background-color: #ffffff; border-radius: 5px">
+    <div style="padding: 20px;">
+      <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Thông tin hãng sản xuất</div>
+      <div class="row">
+
+        <div class="col-2">
+          <label>Hãng sản xuất <span style="color: red">*</span></label>
+        </div>
+
+        <div class="col-10"><input type="text" class="check form-control" disabled name="manufacturerName"
+                                   [(ngModel)]="asset.manufacturers[0].manufacturer"/>
+        </div>
+
+        <div class="col-2"><label>Địa chỉ <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" disabled name="address"
+                                   [(ngModel)]="asset.manufacturers[0].address"/>
+        </div>
+
+        <div class="col-2"><label>Thông tin liên hệ <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" disabled name="contacts"
+                                   [(ngModel)]="asset.manufacturers[0].contacts"/>
+        </div>
+
+        <div class="col-2"><label>Hướng dẫn tra cứu thông tin, thời gian bảo trì, nhờ support từ hãng <span
+          style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="lookingUpInformation" disabled
+                                   [(ngModel)]="asset.lookingUpInformation"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    style=" margin-top: 30px; background-color: #ffffff; border-radius: 5px; display: flex; justify-content: space-between;">
+    <div class="m-t-20 text-right" style="padding: 10px; margin-top: 10px">
+      <a style="color: #908d8d">
+        < Quay lại
+      </a>
+    </div>
+  </div>
+</div>

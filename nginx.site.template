@@ -1,0 +1,24 @@
+server {
+  listen 80;
+  root  /usr/share/nginx/html/assetmngtfe;
+  index index.html index.htm;
+  try_files $uri $uri/ /index.html =404;
+
+  resolver 8.8.8.8 valid=30s ipv6=off;
+  # compression
+  gzip on;
+  gzip_min_length 1000;
+  gzip_proxied expired no-cache no-store private auth;
+  gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+  location ~/api(.*)$ {
+    # pass the request
+    proxy_pass http://localhost:8080;
+
+    # add response CORS headers
+    add_header 'Access-Control-Allow-Origin' '*';
+    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+    add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+    add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range';
+  }
+}

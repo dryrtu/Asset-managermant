@@ -1,0 +1,32 @@
+.mat-elevation-z1 {
+  text-align: center;
+  color: brown;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tbodyuser {
+    vertical-align: middle ;
+}
+
+.bg-table-header{
+  text-align: center;
+  background-color:rgb(158,207,251) !important;
+  vertical-align: middle ;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.table th {
+  vertical-align: middle;
+}
+
+
+  

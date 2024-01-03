@@ -1,0 +1,44 @@
+<div class="page-header">
+    <button
+      mat-raised-button
+      class="btn btn-primary"
+      (click)="openDialog()"
+    >
+      <span> Tạo mới tiền tệ </span>
+    </button>
+  </div>
+  
+<div style="position: relative; margin-top: 20px;">
+  <div class="mat-elevation-z1 tab">
+    <table class="table table-hover bg-table-header table-bordered" style="width:100%">
+      <thead style="height: 50px; vertical-align: middle;  text-align: center;" class="table-primary">
+        <tr>
+          <th style="width:5%">STT</th>
+          <th style="width:40%">Đơn vị tiền tệ</th>
+          <th style="width:40%">Mô tả</th>
+          <th style="width:15%">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let currency of currencyList; let i = index">
+          <tr>
+            <td style="text-align: center;">{{ i + 1 }}</td>
+            <td>{{ currency.currencyUnit}}</td>
+            <td>{{ currency.description }}</td>
+            <td style="text-align: center">
+              <button class="btn" (click)="openDialogUpdateCurrency(currency.id)"><mat-icon>edit</mat-icon></button>
+              <button class="btn" style="margin-left: 10px;" (click)="deleteCurrency(currency.id)" [disabled]="isDeletingCurrency">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex"
+    (page)="onPageChange($event)"></mat-paginator>
+</div>
+
+  

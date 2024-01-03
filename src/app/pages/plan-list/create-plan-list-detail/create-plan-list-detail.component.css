@@ -1,0 +1,15 @@
+.check:invalid {
+  border: 2px solid rgb(209, 209, 209);
+}
+
+.mat-error-unitNameInvalid {
+  display: none;
+}
+
+.check:invalid + .mat-error-unitNameInvalid {
+  display: block;
+}
+
+.check:valid {
+  border: 2px solid black;
+}

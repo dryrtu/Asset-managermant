@@ -1,0 +1,20 @@
+.check:invalid {
+    border: 2px solid red;
+  }
+  
+  .mat-error-unitNameInvalid {
+    display: none;
+  }
+  
+  .check:valid {
+    border: 2px solid black;
+  }
+  
+  .check:invalid:focus + .mat-error-unitNameInvalid {
+    display: block;
+  }
+
+  label {
+    font-weight: 500;
+   }
+  

@@ -1,0 +1,86 @@
+<div style="padding: 20px; background-color: #f5f5f5; width: 800px;">
+    <h3>Thêm sản phẩm "{{ shoppingPlan?.productName }}" vào tài sản</h3>
+    <form (ngSubmit)="onSubmit()">
+        <div class="row">
+
+
+            <div class="col-sm-4 mb-3">
+                <div class="form-group">
+                    <label> Tên sản phẩm </label>
+                    <input type="text" class="form-control" [(ngModel)]="shoppingPlan.productName" name="productName" [readonly]="true" />
+                </div>
+            </div>
+
+            <div class="col-sm-4 mb-3">
+                <div class="form-group">
+                    <label> Mã tài sản</label>
+                    <input type="text" class="form-control" [(ngModel)]="shoppingPlan.itemCode" name="itemCode" />
+                </div>
+            </div>
+
+            <div class="col-sm-4 mb-3">
+                <div class="form-group">
+                    <label> Đơn giá </label>
+                    <input type="text" class="form-control" [(ngModel)]="shoppingPlan.price" name="price"/>
+                    <div>{{ shoppingPlan.price | currency : "VND" : "symbol" : "1.0-0" : "vi-VN" }}</div>
+                </div>
+            </div>
+  
+
+            <div class="col-sm-4 mb-3">
+                <div class="form-group">
+                    <label> Mã hợp đồng </label>
+                    <input type="text" class="form-control" [(ngModel)]="shoppingPlan.contractCode" name="contractCode" />
+                </div>
+            </div>
+  
+            <div class="col-sm-4 mb-3">
+                <div class="form-group">
+                    <label> Tên hợp đồng</label>
+                    <input type="text" class="form-control" [(ngModel)]="shoppingPlan.contractName" name="contractName" />
+                </div>
+            </div>
+  
+            <div class="col-sm-4 mb-3">
+                <div class="form-group">
+                    <label> Nhà cung cấp </label>
+                    <select id="planListId" class="form-control" (change)="getSuppilerId($event)">
+                        <option value="" disabled selected> Chọn nhà cung cấp</option>
+                        <option *ngFor="let supplier of supplierOptions" [value]="supplier.id">{{ supplier.supplierName }}</option>
+                      </select>
+                    
+                </div>
+            </div>
+  
+            <div class="col-sm-4 mb-3">
+                <div class="form-group">
+                    <label> Nước sản xuất </label>
+                    <input type="text" class="form-control" [(ngModel)]="shoppingPlan.productOrigin" name="productOrigin" />
+                </div>
+            </div>
+  
+            <div class="col-sm-4 mb-3">
+                <div class="form-group">
+                    <label for="ngaythangnam">Ngày bắt đầu bảo hành </label>
+                    <div class="input-group">
+                      <input type="date" class="ngaythangnam form-control" [(ngModel)]="shoppingPlan.warrantyStartDate" name="warrantyStartDate" />
+                    </div>
+                  </div>
+            </div>
+  
+            <div class="col-sm-4 mb-3">
+                <div class="form-group">
+                    <label> Thời gian bảo hành </label>
+                    <input type="text" class="form-control" [(ngModel)]="shoppingPlan.warrantyPeriod" name="supplier" />
+                </div>
+            </div>
+
+        </div>
+        <div class="m-t-20 text-center">
+            <button class="btn btn-success" style="width: 200px;" type="submit" [disabled]="isSubmitting ">
+              Cập nhật
+            </button>
+          </div>
+    </form>
+  </div>
+  

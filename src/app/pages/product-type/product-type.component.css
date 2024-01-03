@@ -1,0 +1,21 @@
+.table td {
+    vertical-align: middle;
+  }
+
+  .bg-table-header{
+    text-align: center;
+    background-color:rgb(158,207,251) !important;
+    vertical-align: middle ;
+  }
+
+  .type:hover {
+    color: #598bff;
+  }
+
+  .active{
+    text-align: center;
+  }
+
+  .table th {
+    vertical-align: middle;
+  }

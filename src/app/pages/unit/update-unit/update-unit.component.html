@@ -1,0 +1,25 @@
+<div style=" padding: 20px; background-color: #f5f5f5;">
+  <h3 style="font-weight: 500;">Cập nhật đơn vị tính</h3>
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label> Tên đơn vị tính</label>
+          <div class="input-container">
+            <input type="text" class="check form-control" [(ngModel)]="unit.unitName" name="name" required maxlength="9"/>
+            <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Đơn vị tính không hợp lệ</mat-error>
+        </div>
+      </div>
+  
+        <div class="form-group">
+          <label> Mô tả</label>
+          <input type="text" class="form-control" [(ngModel)]="unit.description" name="description"/>
+      </div>
+  
+        <div class="btn-group"  class="d-flex justify-content-between">
+            <button class="btn btn-success" type="submit" [disabled]="!unit.unitName">Đồng ý</button>
+            <button class="btn btn-success" (click)="close()" type="button">Thoát</button>
+        </div>
+    </form>
+  </div>
+  
+  
+  

@@ -1,0 +1,14 @@
+<div style="padding: 20px; background-color: #f5f5f5; width: 400px;">
+  <h2 style="font-weight: 500;">Sửa tên danh mục mua sắm</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group" style="margin-top: 20px">
+      <input type="text" class="check form-control" [(ngModel)]="planListDetail.nameOfPlanList" name="nameOfPlanList" placeholder="Tên danh sách" required maxlength="1000"/>
+      <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Tên danh sách không được để trống</mat-error>
+    </div>
+
+    <div class="btn-group" class="d-flex justify-content-between" style="margin-top: 40px">
+      <button class="btn" style="background-color: #064d69; color: #ffffff;" type="submit" [disabled]="!planListDetail.nameOfPlanList || submitting">Đồng ý</button>
+      <button class="btn" style="background-color: #064d69; color: #ffffff;" (click)="close()" type="button">Thoát</button>
+    </div>
+  </form>
+</div>

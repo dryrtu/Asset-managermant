@@ -1,0 +1,98 @@
+<div style="background-color: #ffffff;width: 600px; height: 600px">
+  <h2 style="font-weight: 500;">Tìm kiếm nâng cao</h2>
+  <hr>
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div>
+      <div style="margin-bottom: 20px">
+        <div style="margin-bottom: 5px">
+          <label>Chọn năm</label>
+        </div>
+        <div class="form-group">
+          <select id="planListId" class="form-control" (change)="onYearChange($event)" formControlName="planListID">
+            <option value="" disabled selected>--Chọn--</option>
+            <option *ngFor="let plan of planListOptions" [value]="plan.id">{{ plan.year }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="text-group" style="margin-bottom: 20px">
+        <label style="margin-bottom: 5px"> Tên dự án</label>
+        <input type="text" class="form-control" name="nameOfPlanList" formControlName="nameOfPlanList"/>
+      </div>
+
+      <div style="margin-bottom: 20px">
+        <div style="margin-bottom: 5px">
+          <label>Ngày tạo</label>
+        </div>
+        <div class="date-group">
+          <input style="width: 45%" type="date" class="date-control" name="createdDateStart"
+                 formControlName="createdDateStart" (change)="dateRangeValidator('createdDateStart','createdDateEnd',0)"/>
+          <input style="width: 45%" type="date" class="date-control" name="createdDateEnd"
+                 formControlName="createdDateEnd" (change)="dateRangeValidator('createdDateStart','createdDateEnd',0)"/>
+        </div>
+        <mat-error *ngIf="note[0]">Ngày bắt đầu không lớn hơn ngày kết thúc</mat-error>
+      </div>
+
+      <div style="margin-bottom: 20px">
+        <div style="margin-bottom: 5px">
+          <label>Ngày phê duyệt</label>
+        </div>
+        <div class="date-group">
+          <input style="width: 45%" type="date" class="date-control" name="approvedDateStart"
+                 formControlName="approvedDateStart" (change)="dateRangeValidator('approvedDateStart','approvedDateEnd',1)"/>
+          <input style="width: 45%" type="date" class="date-control" name="approvedDateEnd"
+                 formControlName="approvedDateEnd" (change)="dateRangeValidator('approvedDateStart','approvedDateEnd',1)"/>
+        </div>
+        <mat-error *ngIf="note[1]">Ngày bắt đầu không lớn hơn ngày kết thúc</mat-error>
+      </div>
+
+      <div style="margin-bottom: 20px" class="row">
+        <div style="margin-bottom: 5px">
+          <label>Trạng thái</label>
+        </div>
+        <div class="check-group" style="margin-bottom: 10px">
+          <div class="col-4" *ngIf="userRole !== 'ADMIN'">
+            <input type="checkbox" id="DRAFT" name="nhap" formControlName="planListDetailStatus1" (change)="checkAll()">
+            <label style="font-weight: 400; margin-left: 5px" for="DRAFT"> Nháp</label>
+          </div>
+          <div class="col-4">
+
+          <input type="checkbox" id="PENDING" name="cho" formControlName="planListDetailStatus2"
+                   (change)="checkAll()">
+            <label style="font-weight: 400; margin-left: 5px" for="PENDING"> Chờ phê duyệt</label>
+          </div>
+          <div class="col-4">
+          <input type="checkbox" id="APPROVED" name="da" formControlName="planListDetailStatus3"
+                   (change)="checkAll()">
+            <label style="font-weight: 400; margin-left: 5px" for="APPROVED"> Đã phê duyệt</label>
+          </div>
+        </div>
+
+        <div class="check-group">
+          <div class="col-4">
+            <input type="checkbox" id="CANCELLED" name="tc" formControlName="planListDetailStatus4"
+                   (change)="checkAll()">
+            <label style="font-weight: 400; margin-left: 5px" for="CANCELLED"> Từ chối phê duyệt</label>
+          </div>
+          <div class="col-4">
+          <input type="checkbox" id="ALL" name="all" [(ngModel)]="selectAll" (change)="toggleAllCheckboxes()"
+                   [ngModelOptions]="{standalone: true}">
+            <label style="font-weight: 400; margin-left: 5px" for="ALL"> Tất cả</label>
+          </div>
+          <div class="col-4">
+          </div>
+        </div>
+      </div>
+<hr>
+      <div style="display: flex; justify-content: space-between">
+        <div class="btn-group" class="d-flex justify-content-between">
+          <a class="btn" style="background-color: #ffffff; color: #064d69; border-color: #064d69" (click)="makeNewSearchForm()">Làm mới</a>
+        </div>
+
+        <div class="btn-group" class="d-flex justify-content-between">
+          <button class="btn" style="background-color: #064d69; color: #ffffff" type="submit" [disabled]="note[0] || note[1]">Tìm kiếm</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

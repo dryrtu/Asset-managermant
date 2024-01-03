@@ -1,0 +1,21 @@
+.bg-table-header {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.table th {
+  vertical-align: middle;
+}
+
+.year:hover {
+  color: #0066cc; /* Màu chữ khi hover */
+}
+
+div .tab {
+  overflow-y: scroll;
+}
+

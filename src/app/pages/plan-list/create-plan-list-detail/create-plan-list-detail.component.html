@@ -1,0 +1,21 @@
+<div style="padding: 20px; background-color: #f5f5f5; width: 400px;">
+    <h3 style="font-weight: 500;">Thêm danh sách</h3>
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <select id="planListId" class="form-control" (change)="onPlanChange($event)">
+                <option value="" disabled selected>Chọn năm thực hiện</option>
+                <option *ngFor="let plan of planListOptions" [value]="plan.id">{{ plan.year }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="check form-control" [(ngModel)]="planListDetail.nameOfPlanList" name="nameOfPlanList" placeholder="Tên kế hoạch mua sắm" required maxlength="1000"/>
+            <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Danh sách không hợp lệ</mat-error>
+        </div>
+
+        <div class="btn-group" class="d-flex justify-content-between">
+            <button class="btn"  style="background-color: #064d69; color: #ffffff;" type="submit" [disabled]="!planListDetail.nameOfPlanList || submitting">Đồng ý</button>
+            <button class="btn" style="background-color: #064d69; color: #ffffff;" (click)="close()" type="button">Thoát</button>
+        </div>
+    </form>
+</div>

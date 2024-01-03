@@ -1,0 +1,47 @@
+.header {
+    margin: 0 auto;
+    padding: 1.1rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+    height: max-content;
+  }
+
+  .logo img {
+    text-decoration: none;
+    color: #192038;
+  }
+  .user {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  /* Tắt các hiệu ứng nút mặc định */
+  .btnmat {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  color: rgb(0, 0, 0);
+}
+
+/* Tùy chỉnh một số kiểu chữ hoặc hiệu ứng khi hover */
+.btnmat:hover {
+  text-decoration: underline; /* Ví dụ: Gạch chân khi hover */
+}
+
+/* Gạch chân mặc định chỉ khi hover */
+.btnmat {
+  text-decoration: none;
+}
+
+/* Loại bỏ đường viền khi button được chọn */
+.btnmat:active {
+  outline: none;
+}
+
+
+
+
+  

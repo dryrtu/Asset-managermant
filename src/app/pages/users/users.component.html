@@ -1,0 +1,46 @@
+<div class="page-header">
+  <button
+    mat-raised-button
+    class="btn btn-primary"
+    (click)="openDialog()"
+  >
+    <span> Thêm người dùng mới </span>
+  </button>
+</div>
+
+<div style="position: relative">
+  <div class="mat-elevation-z1">
+    <table class="table table-hover bg-table-header table-bordered" style="width: 100%;">
+      <thead style="height: 50px; vertical-align: middle;  text-align: center;" class="table-primary">
+        <tr>
+          <th style="width:5%">STT</th>
+          <th style="width:33%">Tên người dùng</th>
+          <th style="width:25%">Email</th>
+          <th style="width:25%">Vai trò</th>
+          <th style="width:12%">Actions</th>
+        </tr>
+      </thead>
+      <tbody  class="tbodyuser">
+        <tr *ngFor="let user of users, let i = index">
+          <td>{{ i + 1 }}</td>
+
+          <td style="text-align: left;">{{ user.name }}</td>
+
+          <td style="text-align: left;">{{ user.email }}</td>
+
+          <td>{{ user.roles[0].name }}</td>
+
+          <td>
+            <button class="btn" ><mat-icon>edit</mat-icon></button>
+            <button class="btn" style="margin-left: 10px" (click)="deleteUser(user.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex"
+  (page)="onPageChange($event)"></mat-paginator>
+</div>

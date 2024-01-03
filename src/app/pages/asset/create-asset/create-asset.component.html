@@ -1,0 +1,325 @@
+<div>
+  <div class="header-container" style="margin-bottom: 20px">
+    <div class="header-title">THÊM TÀI SẢN</div>
+  </div>
+  <form (ngSubmit)="onSubmit()">
+  <div style="padding: 20px; background-color: #ffffff; border-radius: 5px">
+    <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Thông tin tài sản</div>
+    <div class="row">
+      <div class="col-2">
+        <label>Mã tài sản </label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" placeholder="Mã tài sản sẽ tự động tạo khi lưu tài sản thành công" disabled/>
+      </div>
+
+      <div class="col-2">
+        <label>Phiên bản </label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="quantity" placeholder="v1.0" disabled/>
+      </div>
+
+      <div class="col-2">
+        <label>Mã tài sản (kế toán) </label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="assetName" required [(ngModel)]="asset.itemCodeKt"/>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập mã tài sản</mat-error>
+      </div>
+
+      <div class="col-2">
+        <p>Năm thực hiện <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <select class="form-control" name="" (change)="onYearChange($event)">
+          <option value="" disabled selected>--Chọn--</option>
+          <option *ngFor="let plan of planListOptions" [value]="plan.id">
+            {{ plan.year }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-2">
+        <p>Tên kế hoạch mua sắm <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <select class="form-control" (change)="onPlanChange($event)">
+          <option value="" disabled selected>--Vui lòng chọn năm thực hiện--</option>
+          <option *ngFor="let planListDetail of planListDetailOptions" [value]="planListDetail.id">
+            {{ planListDetail.nameOfPlanList }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-2">
+        <p>Tên hàng hóa/dịch vụ (theo Kế hoạch mua sắm) <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <select class="form-control" name="" (change)="onProductChange($event)">
+          <option value="" disabled selected>--Vui lòng chọn kế hoạch mua sắm--</option>
+          <option *ngFor="let product of shoppingPlanList" [value]="product.id">
+            {{ product.productName }}
+          </option>
+        </select>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng chọn Tên hàng hóa/dịch vụ (theo Kế hoạch mua sắm)</mat-error>
+      </div>
+
+      <div class="col-2">
+        <label>Tên tài sản </label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="assetName" required maxlength="500" [(ngModel)]="asset.assetName"/>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập tên tài sản</mat-error>
+      </div>
+
+      <div class="col-2">
+        <p>Loại tài sản <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" disabled [(ngModel)]="shoppingPlan.productTypeDetails[0].productTypes[0].type" name="type"/>
+      </div>
+
+      <div class="col-2">
+        <p>Nhóm tài sản <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" disabled [(ngModel)]="shoppingPlan.productTypeDetails[0].typeDetail" name="typeDetail"/>
+
+<!--        <select class="form-control" name="">-->
+<!--          <option value="" disabled selected>&#45;&#45;Chọn&#45;&#45;</option>-->
+<!--          <option *ngFor="let plan of planListOptions" [value]="plan.id">-->
+<!--            {{ plan.year }}-->
+<!--          </option>-->
+<!--        </select>-->
+      </div>
+
+      <div class="col-2">
+        <label>Thông số kỹ thuật <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="specifications" maxlength="5000" [(ngModel)]="asset.specifications"/>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập thông số kĩ thuật</mat-error>
+      </div>
+
+      <div class="col-2">
+        <p>Xuất xứ <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="productOrigin" [(ngModel)]="asset.productOrigin"/>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập xuất xứ tài sản</mat-error>
+<!--        <select class="form-control" name="">-->
+<!--          <option value="" disabled selected>&#45;&#45;Chọn&#45;&#45;</option>-->
+<!--          <option *ngFor="let plan of planListOptions" [value]="plan.id">-->
+<!--            {{ plan.year }}-->
+<!--          </option>-->
+<!--        </select>-->
+      </div>
+
+      <div class="col-2">
+        <label>Serial <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="serial" maxlength="500" [(ngModel)]="asset.serial"/>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập serial</mat-error>
+      </div>
+
+      <div class="col-2">
+        <label>Mô tả thêm </label>
+      </div>
+      <div class="col-10">
+        <input type="text" class="check form-control" name="description" [(ngModel)]="asset.description"/>
+      </div>
+
+      <div class="col-2">
+        <p>Đơn vị tính <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <select class="check form-control" (change)="onUnitChange($event)" required>
+          <option value="" disabled selected>--Chọn--</option>
+          <option *ngFor="let unit of unitOptions" [value]="unit.id">
+            {{ unit.unitName }}
+          </option>
+        </select>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng chọn đơn vị tính</mat-error>
+      </div>
+
+      <div class="col-2">
+        <label>Số lượng <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <input type="number" class="check form-control" name="quantity" min="1" max="999" [(ngModel)]="asset.quantity"/>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập số lượng</mat-error>
+      </div>
+
+      <div class="col-2">
+        <label>Đơn giá <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <input type="number" class="check form-control" name="price" min="1" [(ngModel)]="asset.price"/>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập đơn giá</mat-error>
+      </div>
+
+      <div class="col-2">
+        <p>Phân loại license <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10">
+        <select class="form-control" name="" (change)="onLicenseTypeChange($event)">
+          <option value="" disabled selected>--Chọn--</option>
+          <option value="Vĩnh viễn">Vĩnh viễn</option>
+          <option value="Có thời hạn">Có thời hạn</option>
+        </select>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng chọn loại License</mat-error>
+      </div>
+
+
+      <div class="col-2">
+        <label>Thời hạn license <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <input type="date" class="check form-control" name="licenceDuration" [(ngModel)]="asset.licenceDuration"/>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng chọn thời hạn license</mat-error>
+      </div>
+
+      <div class="col-2">
+        <label>Ngày bắt đầu sử dụng <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <input type="date" class="check form-control" name="dayStartedUsing" [(ngModel)]="asset.dayStartedUsing"/>
+        <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng chọn ngày bắt đầu sử dụng</mat-error>
+      </div>
+    </div>
+  </div>
+
+  <div style="position: relative; margin-top: 30px; background-color: #ffffff; border-radius: 5px">
+    <div style="padding: 20px;">
+      <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Thông tin hợp đồng</div>
+      <div class="row">
+        <div class="col-2"><label>Mã hợp đồng <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="contractName" required maxlength="50" [(ngModel)]="contract.contractName"/>
+          <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập mã hợp đồng</mat-error>
+        </div>
+
+        <div class="col-2"><label>Tên hợp đồng <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="contractCode" required maxlength="500" [(ngModel)]="contract.contractCode"/>
+          <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập tên hợp đồng</mat-error>
+        </div>
+
+        <div class="col-2"><label>Link svn lưu trữ hợp đồng <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="archiveLink" required maxlength="500" [(ngModel)]="contract.archiveLink"/>
+          <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập link lưu trữ hợp đồng</mat-error>
+        </div>
+
+        <div class="col-2"><label>Ngày bắt đầu hợp đồng <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="date" class="check form-control" name="contractStartDate" required [(ngModel)]="contract.contractStartDate"/>
+          <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng chọn ngày bắt đầu hợp đồng</mat-error>
+        </div>
+
+        <div class="col-2"><label>Ngày kết thúc hợp đồng <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="date" class="check form-control" name="contractEndDate" required [(ngModel)]="contract.contractEndDate"/>
+          <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng chọn ngày kết thúc hợp đồng</mat-error>
+        </div>
+
+        <div class="col-2"><label>Thời gian bảo hành <span style="color: red">*</span> </label></div>
+        <div class="col-7"><input type="number" class="check form-control" name="warrantyPeriod" required min="1" max="1000" [(ngModel)]="contract.warrantyPeriod"/>
+          <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập thời gian bảo hành</mat-error>
+        </div>
+        <div class="col-3"><input type="text" class="check form-control" value="Tháng" disabled/>
+        </div>
+
+        <div class="col-2"><label>Ngày bắt đầu bảo hành <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="date" class="check form-control" name="warrantyStartDate" required [(ngModel)]="contract.warrantyStartDate"/>
+          <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng chọn ngày bắt đầu bảo hành</mat-error>
+        </div>
+
+        <div class="col-2"><label>Ngày kết thúc bảo hành <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="date" class="check form-control" name="warrantyEndDate" required [(ngModel)]="contract.warrantyEndDate"/>
+          <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng chọn ngày kết thúc bảo hành</mat-error>
+        </div>
+
+        <div class="col-2"><label>Đính kèm </label></div>
+        <div class="col-10"><input type="text" class="check form-control" placeholder="Chọn file đính kèm" name="attachedFiles" [(ngModel)]="contract.attachedFiles"/>
+        </div>
+
+        <div class="col-2">
+          <label> Nhà cung cấp <span style="color: red">*</span></label>
+        </div>
+        <div class="col-10">
+          <select class="check form-control" required (change)="loadSupplierInfo($event)">
+            <option value="" disabled selected>--Chọn--</option>
+            <option *ngFor="let supp of supplierList" [value]="supp.id">
+              {{ supp.supplierName }}
+            </option>
+          </select>
+          <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng chọn nhà cung cấp</mat-error>
+        </div>
+
+        <div class="col-2"><label>Địa chỉ <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="supplierAddress" disabled [(ngModel)]="supplier.address"/>
+        </div>
+
+        <div class="col-2"><label>Thông tin liên hệ <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="productName" disabled [(ngModel)]="supplier.contact"/>
+        </div>
+
+        <div class="col-2">
+          <label> Trạng thái hợp đồng <span style="color: red">*</span></label>
+        </div>
+        <div class="col-10">
+          <input type="text" class="check form-control" name="productName" value="Còn hiệu lực" disabled/>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div style="position: relative; margin-top: 30px; background-color: #ffffff; border-radius: 5px">
+    <div style="padding: 20px;">
+      <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Thông tin hãng sản xuất</div>
+      <div class="row">
+
+        <div class="col-2">
+          <label>Hãng sản xuất <span style="color: red">*</span></label>
+        </div>
+        <div class="col-10">
+          <select class="check form-control" required (change)="loadManufacturerInfo($event)">
+            <option value="" disabled selected>--Chọn--</option>
+            <option *ngFor="let mf of manufacturerList" [value]="mf.id">
+              {{ mf.manufacturer }}
+            </option>
+          </select>
+          <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng chọn hãng sản xuất</mat-error>
+        </div>
+
+        <div class="col-2"><label>Địa chỉ <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" disabled name="address" [(ngModel)]="manufacturer.address"/>
+        </div>
+
+        <div class="col-2"><label>Thông tin liên hệ <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" disabled name="contacts" [(ngModel)]="manufacturer.contacts"/>
+        </div>
+
+        <div class="col-2"><label>Hướng dẫn tra cứu thông tin, thời gian bảo trì, nhờ support từ hãng <span style="color: red">*</span> </label></div>
+        <div class="col-10"><input type="text" class="check form-control" name="lookingUpInformation" required maxlength="5000" [(ngModel)]="asset.lookingUpInformation"/>
+          <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Vui lòng nhập thông tin</mat-error>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div style=" margin-top: 30px; background-color: #ffffff; border-radius: 5px; display: flex; justify-content: space-between;">
+      <div class="m-t-20 text-right" style="padding: 10px; margin-top: 10px">
+        <a style="color: #908d8d">
+          < Quay lại
+        </a>
+      </div>
+      <div class="m-t-20 text-right" style="padding: 10px;">
+        <button class="btn" style="background-color: #064d69; color: #ffffff" type="submit" [disabled]="isButtonDisabled() || submitting">
+          Lưu
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>

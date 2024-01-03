@@ -1,0 +1,175 @@
+image: openshift/origin-cli
+
+stages:
+  - build
+  - test
+  - deploy
+  - review
+  - develop
+  - staging
+  - uat
+  - production
+#  - cleanup
+
+variables:
+  APP_DEPLOY_FOLDER: "/assetmngtfe/"
+  GIT_SUBMODULE_STRATEGY: recursive
+  GIT_SUBMODULE_UPDATE_FLAGS: --remote --force --jobs 4
+
+cache:
+  paths:
+    - target
+
+.validate: &validate
+  stage: build
+  script:
+    - 'echo validate'
+
+.verify: &verify
+  stage: test
+  script:
+    - 'apk add --update git openssh'
+    - 'npm install -g @angular/cli@8.3.23'
+    - 'npm install'
+    - 'mkdir -p target'
+    - 'node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --base-href=$APP_DEPLOY_FOLDER --deploy-url $APP_DEPLOY_FOLDER $ENV --output-path target/'
+    - 'cp -rf src/assets target/ && cp Dockerfile target/ && cp nginx.site.template target/'
+    - 'mkdir -p tmp'
+    - 'cp -rf target/* tmp/'
+    - 'mv tmp target/'
+
+develop:validate:nodejs:
+  <<: *validate
+  image: mhart/alpine-node:13.9.0
+  only:
+    - develop
+  when: manual
+
+develop:verify-staging:nodejs:
+  <<: *verify
+  needs:
+    - develop:validate:nodejs
+  image: mhart/alpine-node:13.9.0
+  variables:
+    ENV: "--configuration=dev"
+  only:
+    - develop
+
+validate:nodejs:
+  <<: *validate
+  image: mhart/alpine-node:13.9.0
+  only:
+    - master
+    - /uat-v[0-9][.][0-9][.][0-9]+/
+
+verify-staging:nodejs:
+  <<: *verify
+  image: mhart/alpine-node:13.9.0
+  variables:
+    ENV: "--configuration=test"
+  only:
+    - master
+
+verify-uat:nodejs:
+  <<: *verify
+  image: mhart/alpine-node:13.9.0
+  variables:
+    ENV: "--configuration=uat"
+  only:
+    - /uat-v[0-9][.][0-9][.][0-9]+/
+
+.deploy: &deploy
+  before_script:
+    - oc login "$OPENSHIFT_IP:$OPENSHIFT_PORT" --token="$OPENSHIFT_TOKEN" --insecure-skip-tls-verify
+    - oc project "$PROJECT_NAME"
+  script:
+    - "oc get services $APP 2> /dev/null || oc new-app ./target --name=$APP --strategy=docker"
+    - "oc start-build $APP --from-dir=./target --follow || sleep 3s && oc start-build $APP --from-dir=./target --follow"
+    - "oc get routes $APP 2> /dev/null || oc expose service $APP"
+
+# review:
+#   <<: *deploy
+#   stage: review
+#   variables:
+#     APP: $CI_PROJECT_NAME-$CI_COMMIT_REF_NAME-dev
+#     APP_HOST: $CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$OPENSHIFT_DOMAIN
+#   environment:
+#     name: review/$CI_COMMIT_REF_NAME
+#     url: http://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$OPENSHIFT_DOMAIN
+# #    on_stop: stop-review
+#   only:
+#     - branches
+#   except:
+#     - master
+
+# stop-review:
+#   <<: *deploy
+#   stage: cleanup
+#   script:
+#     - oc delete all -l "app=$APP"
+#   when: manual
+#   variables:
+#     APP: $CI_PROJECT_NAME-$CI_COMMIT_REF_NAME-dev
+#     GIT_STRATEGY: none
+#   environment:
+#     name: review/$CI_COMMIT_REF_NAME
+#     action: stop
+#   only:
+#     - branches
+#   except:
+#     - master
+
+develop:
+  <<: *deploy
+  stage: develop
+  needs:
+    - develop:verify-staging:nodejs
+  variables:
+    APP: idnes-asset-management-fe-dev
+    APP_HOST: idnes-asset-management-fe-staging.$OPENSHIFT_DOMAIN
+    PROJECT_NAME: $OPENSHIFT_PROJECT_DEV
+  environment:
+    name: develop
+    url: http://idnes-asset-management-fe-staging.$OPENSHIFT_DOMAIN
+  only:
+    - develop
+
+staging:
+  <<: *deploy
+  stage: staging
+  variables:
+    APP: idnes-asset-management-fe-test
+    APP_HOST: idnes-asset-management-fe-test.$OPENSHIFT_DOMAIN
+    PROJECT_NAME: $OPENSHIFT_PROJECT
+  environment:
+    name: staging
+    url: http://idnes-asset-management-fe-staging.$OPENSHIFT_DOMAIN
+  only:
+    - master
+
+uat:
+  <<: *deploy
+  stage: uat
+  variables:
+    APP: idnes-asset-management-fe-uat
+    APP_HOST: idnes-asset-management-fe.$OPENSHIFT_DOMAIN
+    PROJECT_NAME: $OPENSHIFT_PROJECT_UAT
+  when: manual
+  environment:
+    name: uat
+    url: http://idnes-asset-management-fe.$OPENSHIFT_DOMAIN
+  only:
+    - /uat-v[0-9][.][0-9][.][0-9]+/
+
+# production:
+#   <<: *deploy
+#   stage: production
+#   variables:
+#     APP: $CI_PROJECT_NAME-$CI_COMMIT_REF_NAME-prod
+#     APP_HOST: $CI_PROJECT_NAME.$OPENSHIFT_DOMAIN
+#   when: manual
+#   environment:
+#     name: production
+#     url: http://$CI_PROJECT_NAME.$OPENSHIFT_DOMAIN
+#   only:
+#     - master

@@ -1,0 +1,74 @@
+<div class="page-header">
+  <button mat-raised-button class="btn btn-primary" (click)="openDialog()">
+    <span> Thêm năm </span>
+  </button>
+  <button mat-raised-button class="btn btn-primary" style="margin-left: 20px"
+    (click)="openDialogCreatePlanListDetail()">
+    <span> Thêm danh sách </span>
+  </button>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+  <div class="col-md-4 tab" style="max-height: 300px; overflow-y: auto;">
+    <table class="table table-bordered table-hover table-sm">
+      <thead style="height: 50px; vertical-align: middle; text-align: center; position: sticky; top: 0;"
+        class="table-primary">
+        <tr>
+          <th class="col-2">STT</th>
+        <th class="col-6">Năm</th>
+        <th class="col-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let list of planLists; let i = index">
+          <tr>
+            <td style="text-align: center">{{ i + 1 }}</td>
+            <td class="year" style="text-align: center; cursor: pointer;" (click)="viewPlanListDetails(list.id)">
+               {{ list.year }}
+             
+            </td>
+            <td class="active" style="text-align: center;">
+              <button class="btn" (click)="updatePlanList(list.id)"><mat-icon>edit</mat-icon></button>
+              <button class="btn" style="margin-left: 10px" (click)="deletePlanList(list.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-8 tab" style="max-height: 300px; overflow-y: auto;">
+    <table class="table table-bordered table-hover table-sm">
+      <thead style="height: 50px; vertical-align: middle; text-align: center; position: sticky; top: 0;" class="table-primary">
+        <tr>
+          <th class="col-1">STT</th>
+          <th class="col-9">Danh sách kế hoạch</th>
+          <th class="col-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="planListDetail.length > 0; else noData">
+          <tr *ngFor="let listDetail of planListDetail; let i = index">
+            <td style="text-align: center">{{ i + 1 }}</td>
+            <td style="text-align: center">{{ listDetail.nameOfPlanList }}</td>
+            <td style="text-align: center;" class="active">
+              <button class="btn" (click)="updatePlanListDetail(listDetail.id)"><mat-icon>edit</mat-icon></button>
+              <button class="btn" style="margin-left: 10px" (click)="deletePlanList(listDetail.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template #noData>
+          <tr>
+            <td colspan="3" style="text-align: center">Không có dữ liệu</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+  
+</div>

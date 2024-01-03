@@ -1,0 +1,140 @@
+<div>
+  <div class="header-container" style="margin-bottom: 20px">
+    <div class="header-title">DANH MỤC TÀI SẢN</div>
+    <div>
+      <a [routerLink]="['/admin/tao-tai-san']">
+        <button mat-raised-button class="btn" style="background-color: #064d69; color: #ffffff">
+          <span>Tạo mới +</span>
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <div style="
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
+    ">
+    <div style="display: flex; padding: 20px; justify-content: space-between">
+      <form [formGroup]="searchForm" (ngSubmit)="getAllAsset()">
+        <div style="display: flex">
+          <div class="form-group" style="margin-left: 10px; width: 250px">
+            <input type="text" style="width: 250px" class="check form-control" placeholder="Mã tài sản" formControlName="itemCode"/>
+          </div>
+
+          <div class="form-group" style="margin-left: 10px; width: 250px">
+            <input type="text" style="width: 250px" class="check form-control" placeholder="Tên tài sản" formControlName="nameAsset"/>
+          </div>
+
+          <div class="form-group" style="margin-left: 10px">
+            <button class="btn" style="
+              vertical-align: middle;
+              text-align: center;
+              background-color: #064d69;
+              color: #ffffff;
+            ">
+              <span>Tìm kiếm</span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div style="display: flex">
+        <div class="form-group" style="margin-left: 20px">
+          <button type="submit" class="btn" style="
+              vertical-align: middle;
+              text-align: center;
+              border-color: #064d69;
+              color: #064d69;
+            " (click)="openDialogSearch()">
+            Tìm kiếm nâng cao
+          </button>
+        </div>
+
+        <div class="form-group" style="margin-left: 20px">
+          <button class="btn" style="
+              vertical-align: middle;
+              text-align: center;
+              border-color: #064d69;
+              color: #064d69;
+            " >
+            <span>Xuất Excel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; padding-right: 20px">
+      <div style="position: relative;">
+        <div class="mat-elevation-z1 tab">
+          <table class="table" style="width: 100%">
+            <thead style="vertical-align: middle" class="table-secondary">
+            <tr>
+              <th style="width: 2%;">STT</th>
+              <th style="width: 7%;">Mã tài sản</th>
+              <th style="width: 21%;">Tên tài sản</th>
+              <th style="width: 18%;">Tên kế hoạch mua sắm</th>
+              <th style="width: 18%;">Nhà cung cấp</th>
+              <th style="width: 9%;">Thời hạn lisence</th>
+              <th style="width: 10%;">Thời hạn bảo hành</th>
+              <th style="width: 6%;">Trạng thái</th>
+              <th style="width: 11%;">Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container>
+              <tr *ngFor="let product of assetList; let i = index">
+                <td style="text-align: center">{{ i + 1 }}</td>
+                <td>{{ product.itemCode }}</td>
+                <td>{{ product.assetName }}</td>
+                <td>{{ product.shoppingPlan.planListDetails[0].nameOfPlanList }}</td>
+                <td>
+                  {{ product.contracts[0].suppliers[0].supplierName }}
+                </td>
+                <td>{{ product.licenceDuration | date : "dd/MM/yyyy" }}</td>
+                <td>{{ product.contracts[0].warrantyEndDate | date : "dd/MM/yyyy" }}</td>
+                <td>
+                  <button (click)="changeAssetStatus(product.id)" [style.height.px]="30" [style.background-color]="
+                      product.assetStatus === 'Inactive'
+                        ? '#FDE6AA'
+                        : product.assetStatus === 'Active'
+                        ? '#D0FCDF'
+                        : ''
+                    " [style.color]="
+                      product.assetStatus === 'Inactive'
+                        ? '#FB7A03'
+                        : product.assetStatus === 'Active'
+                        ? '#1EA744'
+                        : ''
+                    " style="
+                      border-radius: 15px;
+                      text-align: center;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      border: none;
+                    ">
+                    {{ product.assetStatus }}
+                  </button>
+                </td>
+                <td style="margin-left: 10px;">
+                  <button class="btn" [routerLink]="'/admin/xem-chi-tiet-tai-san/'+ product.id"><mat-icon>visibility</mat-icon></button>
+                  <button class="btn" *ngIf=" (product.assetStatus === 'Active')" [routerLink]="'/admin/cap-nhat-tai-san/'+ product.id"><mat-icon>edit</mat-icon></button>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-template #noData>
+              <tr>
+                <td colspan="9" style="text-align: center">Không có dữ liệu</td>
+              </tr>
+            </ng-template>
+            </tbody>
+          </table>
+        </div>
+
+      <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex"
+                     (page)="onPageChange($event)"></mat-paginator>
+    </div>
+  </div>
+</div>
+</div>

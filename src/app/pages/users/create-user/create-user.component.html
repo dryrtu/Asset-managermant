@@ -1,0 +1,43 @@
+<div class="form-container">
+    <h2>Thêm người dùng</h2>
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+        <div class="form-group">
+            <label for="firstName">Tên</label>
+            <input type="text" class="form-control" id="firstName" [(ngModel)]="user.name" name="firstName" required />
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Email</label>
+            <input type="email" class="form-control" id="lastName" [(ngModel)]="user.email" name="lastName" required />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mật khẩu</label>
+            <input type="password" class="form-control" id="password" [(ngModel)]="user.password" name="password" required />
+        </div>
+        
+        <div class="form-group">
+            <label for="confirmPassword">Nhập lại mật khẩu</label>
+            <input type="password" class="form-control" id="confirmPassword" [(ngModel)]="user.confirmPassword" name="confirmPassword" required />
+            <div *ngIf="userForm.hasError('passwordMismatch') && userForm.touched" class="text-danger">
+                Mật khẩu không khớp.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="role">Vai trò</label>
+            <select class="form-control" [(ngModel)]="user.role" name="role" required>
+                <option value="ADMIN">ADMIN</option>
+                <option value="USER">USER</option>
+            </select>
+        </div>
+
+        <div class="button-container">
+            <button class="btn btn-success" type="submit" [disabled]="userForm.invalid || loading">Submit</button>
+
+            <div *ngIf="loading" class="alert alert-info">
+                Vui lòng chờ...
+            </div>
+        </div>
+    </form>
+</div>

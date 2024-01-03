@@ -1,0 +1,221 @@
+<div>
+  <div class="header-container" style="margin-bottom: 20px">
+    <div class="header-title">KẾ HOẠCH MUA SẮM</div>
+  </div>
+
+  <div style="padding: 20px; background-color: #ffffff; border-radius: 5px">
+    <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Thông tin kế hoạch mua sắm</div>
+    <div class="row">
+      <div class="col-2">
+        <p style="font-weight: 500;">Năm thực hiện <span style="color: red">*</span></p>
+        <p style=" margin-top: 35px; font-weight: 500;">Tên kế hoạch mua sắm <span style="color: red">*</span></p>
+      </div>
+      <div class="col-10" style="vertical-align: middle;">
+        <div>
+          <select class="form-control" name="" id="" style="width: 1000px; height: 35px;" (change)="onYearChange($event)">
+            <option value="" disabled selected>--Chọn--</option>
+            <option *ngFor="let plan of planListOptions" [value]="plan.id">
+              {{ plan.year }}
+            </option>
+          </select>
+        </div>
+        <div style="display: flex;">
+          <select class="form-control" style="width: 1000px; margin-top: 10px; height: 35px;" (change)="onPlanChange($event)">
+            <option value="" disabled selected>--Chọn--</option>
+            <option *ngFor="let planListDetail of planListDetailOptions" [value]="planListDetail.id">
+              {{ planListDetail.nameOfPlanList }}
+            </option>
+          </select>
+          <button class="btn" style="background-color: #064d69; color: #ffffff; margin-left: 10px; height: 35px; margin-top: 10px;" (click)="openDialogCreatePlanListDetail()">Thêm +</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="position: relative; margin-top: 30px; background-color: #ffffff; border-radius: 5px">
+    <div style="padding: 20px;">
+      <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Danh sách mua sắm</div>
+      <div>
+        <table class="table table-hover bg-table-header" style="width: 100%">
+          <thead style="vertical-align: middle; text-align: center" class="table-secondary">
+            <tr>
+              <th style="width: 7%">STT</th>
+              <th style="width: 63%">Tên hàng hóa/dịch vụ</th>
+              <th style="width: 20%">Phân loại</th>
+              <th style="width: 10%">Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="shoppingPlanList.length > 0; else noData">
+              <tr *ngFor="let product of shoppingPlanList; let i = index">
+                <td style="text-align: center">{{ i + 1 }}</td>
+                <td>{{ product.productName }}</td>
+                <td>{{ product.productTypeDetails[0].productTypes[0].type }}</td>
+                <td style="text-align: center">
+                    <input type="radio" name="selectedProduct"  [value]="product.id">
+                  <button class="btn btnedit" title="Chỉnh sửa kế hoạch" (click)="deleteShoppingPlan(product.id)">
+                    <mat-icon style="font-size: 16px;">delete</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-template #noData>
+              <tr>
+                <td colspan="8" style="text-align: center">Không có dữ liệu</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="text-right" style="margin-top: 20px;">
+        <button class="btn" style="background-color: #064d69; color: #ffffff" (click)="clearForm()">Thêm mới +</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="position: relative; margin-top: 30px; background-color: #ffffff; border-radius: 5px">
+    <div style="padding: 20px;">
+      <div style="font-weight: 500; margin-bottom: 20px; font-size: 18px;">Tạo mới danh mục</div>
+      <div>
+        <form (ngSubmit)="onSubmit()">
+          <div class="row">
+
+            <div class="col-2"><label> Tên sản phẩm <span style="color: red">*</span> </label></div>
+            <div class="col-10"><input type="text" class="check form-control" [(ngModel)]="shoppingPlan.productName"
+              name="productName" required maxlength="1000" />
+            <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Tên sản phẩm không
+              hợp lệ</mat-error>
+            </div>
+
+            <div class="col-2">
+              <label> Phân loại <span style="color: red">*</span></label>
+            </div>
+            <div class="col-10">
+              <select class="check form-control" (change)="onProductTypeChange($event)" required>
+              <option value="" disabled selected>--Chọn--</option>
+              <option *ngFor="let productType of productTypeOptions" [value]="productType.id">
+                {{ productType.type }}
+              </option>
+            </select>
+            <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Phân loại không hợp
+              lệ</mat-error>
+            </div>
+
+            <div class="col-2">
+              <label> Nhóm sản phẩm <span style="color: red">*</span></label>
+            </div>
+            <div class="col-10">
+              <select  class="check form-control" (change)="onProductTypeDetailChange($event)" required>
+                  <option value="" disabled selected>--Chọn--</option>
+                  <option *ngFor="let productTypeDetail of productTypeDetailOptions" [value]="productTypeDetail.id">
+                    {{ productTypeDetail.typeDetail }}
+                  </option>
+                </select>
+                <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Nhóm sản phẩm không
+                  hợp lệ</mat-error>
+            </div>
+
+            <div class="col-2">
+              <label> Đơn vị tính <span style="color: red">*</span></label>
+            </div>
+            <div class="col-10">
+              <select class="check form-control" (change)="onUnitChange($event)" required>
+                  <option value="" disabled selected>--Chọn--</option>
+                  <option *ngFor="let unit of unitOptions" [value]="unit.id">
+                    {{ unit.unitName }}
+                  </option>
+                </select>
+                <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Đơn vị tính không hợp
+                  lệ</mat-error>
+            </div>
+
+            <div class="col-2">
+              <label> Số lượng <span style="color: red">*</span></label>
+            </div>
+            <div class="col-10">
+              <input type="number" class="check form-control" [(ngModel)]="shoppingPlan.quantity" name="quantity"
+                required min="1" max="999" />
+              <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Số lượng không hợp
+                lệ</mat-error>
+            </div>
+
+            <div class="col-2">
+              <label> Đơn giá dự kiến</label>
+            </div>
+            <div class="col-7">
+              <input type="number" class="check form-control" [(ngModel)]="shoppingPlan.expectedPrice " name="unitPrice"
+                required min="1" />
+              <mat-error class="mat-error-unitNameInvalid" style="color: red; font-size: small">Đơn giá không hợp
+                lệ</mat-error>
+            </div>
+
+            <div class="col-3">
+              <select  class="check form-control" (change)="onCurrencyChange($event)" required>
+                <option value="" disabled selected>--Chọn--</option>
+                <option *ngFor="let currency of currencyOptions" [value]="currency.id">
+                  {{ currency.currencyUnit }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-2">
+              <label> Thành tiền</label>
+            </div>
+            <div class="col-7">
+              <input type="text" class="form-control" [value]="totalAmount | currency:'VND':'symbol':'1.0-0':'vi-VN'" disabled />
+            </div>
+
+
+            <div class="col-3">
+              <select id="planListId" class="check form-control" (change)="onCurrencyChange($event)" required
+              >
+              <option value="" disabled selected>--Chọn--</option>
+              <option *ngFor="let currency of currencyOptions" [value]="currency.id">
+                {{ currency.currencyUnit }}
+              </option>
+            </select>
+            </div>
+
+            <div class="col-2">
+              <label> Mô tả <span style="color: red">*</span></label>
+            </div>
+            <div class="col-10">
+              <textarea type="text" class="form-control" [(ngModel)]="shoppingPlan.description"
+                  name="description" maxlength="2000"></textarea>
+            </div>
+
+          </div>
+
+          <div class="m-t-20 text-right">
+            <button class="btn" style="background-color: #064d69; color: #ffffff" type="submit"
+              [disabled]="isButtonDisabled() || submitting">
+              Thêm vào danh sách
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <div style=" margin-top: 30px; background-color: #ffffff; border-radius: 5px; display: flex; justify-content: space-between;">
+    <div class="m-t-20 text-right" style="padding: 20px;">
+      <button class="btn" style="background-color: #ffffff; color: #908d8d" type="submit" (click)="goBack()">
+        < Quay lại
+      </button>
+    </div>
+    <div class="m-t-20 text-right" style="padding: 20px;">
+      <button>
+        <label>
+          <span class="mdi mdi-file-export"> </span>
+          <small>Import</small>
+          <input hidden type="file" (change)="onFileChange($event)" multiple="false">
+        </label>
+      </button>
+      <button class="btn" style="background-color: #064d69; color: #ffffff" type="submit" (click)="savePlanList()">
+        Lưu kế hoạch mua sắm
+      </button>
+    </div>
+  </div>
+</div>

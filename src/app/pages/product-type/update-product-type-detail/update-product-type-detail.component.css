@@ -1,0 +1,16 @@
+.check:invalid {
+    border: 2px solid red;
+  }
+  
+  .mat-error-unitNameInvalid {
+    display: none;
+  }
+  
+  .check:invalid + .mat-error-unitNameInvalid {
+    display: block;
+  }
+  
+  .check:valid {
+    border: 2px solid black;
+  }
+  

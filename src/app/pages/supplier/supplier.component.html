@@ -1,0 +1,45 @@
+<div class="page-header">
+    <button
+      mat-raised-button
+      class="btn btn-primary"
+      (click)="openDialog()"
+    >
+      <span> Tạo nhà cung cấp </span>
+    </button>
+  </div>
+  
+<div style="position: relative; margin-top: 20px;">
+  <div class="mat-elevation-z1 tab">
+    <table class="table table-hover bg-table-header table-bordered" style="width:100%">
+      <thead style="height: 50px; vertical-align: middle; text-align: center;" class="table-primary">
+        <tr>
+          <th style="width:5%">STT</th>
+          <th style="width:50%">Tên nhà cung cấp</th>
+          <th style="width:25%">Mã nhà cung cấp</th>
+          <th style="width:20%">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let supplier of supplierList; let i = index">
+          <tr>
+            <td style="text-align: center">{{ i + 1 }}</td>
+            <td style="text-align: left">{{ supplier.supplierName}}</td>
+            <td style="text-align: left">{{ supplier.supplierCode }}</td>
+            <td>
+              <button class="btn" (click)="openDialogUpdateSupplier(supplier.id)"><mat-icon>edit</mat-icon></button>
+              <button class="btn" style="margin-left: 10px;" (click)="deleteSupplier(supplier.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex"
+    (page)="onPageChange($event)"></mat-paginator>
+</div>
+
+  

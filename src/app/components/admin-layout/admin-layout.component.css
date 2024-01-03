@@ -1,0 +1,23 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    height: 4.75rem;
+  }
+  
+  .main {
+    margin-top: 4.75rem;
+  }
+  
+  .left-menu {
+    width: 15rem;
+    padding: 1.25rem 0;
+  }
+  
+  .main-content {
+    padding: 2.25rem;
+    min-height: calc(100vh - 4.75rem - 61px);
+  }
+  

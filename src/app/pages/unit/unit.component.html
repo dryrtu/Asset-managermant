@@ -1,0 +1,51 @@
+<div class="page-header">
+  <button
+    mat-raised-button
+    class="btn btn-primary"
+    (click)="openDialog()"
+  >
+    <span> Tạo đơn vị tính </span>
+  </button>
+</div>
+
+
+<div style="position: relative; margin-top: 20px;">
+    <div class="mat-elevation-z1 tab">
+      <table class="table table-hover bg-table-header table-bordered" style="width: 100%">
+        <thead style="height: 50px; vertical-align: middle" class="table-primary">
+          <tr>
+            <th style="width: 5%;">STT</th>
+            <th style="width: 40%;">Đơn vị tính</th>
+            <th style="width: 40%;">Mô tả</th>
+            <th style="width: 15%;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let unit of unitList; let i = index">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ unit.unitName }}</td>
+              <td>{{ unit.description }}</td>
+              <td>
+                <button class="btn" (click)="openDialogUpdateUnit(unit.id)"><mat-icon>edit</mat-icon></button>
+                <button class="btn" style="margin-left: 10px" (click)="deleteUnit(unit.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  
+    <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex"
+      (page)="onPageChange($event)"></mat-paginator>
+  </div>
+  
+
+
+
+  
+  
+
+  

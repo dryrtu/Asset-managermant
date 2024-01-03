@@ -1,0 +1,105 @@
+<ul class="menu">
+  <li>
+    <a
+      routerLink="/admin/danh-muc-mua-sam"
+      routerLinkActive="active"
+    >
+      <mat-icon aria-hidden="false" aria-label="Dashboard Icon"
+        >add_shopping_cart
+      </mat-icon>
+      Kế hoạch mua sắm
+    </a>
+  </li>
+  <li>
+    <a
+      routerLink="/admin/users"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <mat-icon aria-hidden="false" aria-label="User Icon">group</mat-icon>
+      Danh sách người dùng
+    </a>
+  </li>
+  <li>
+    <a routerLink="/admin/assets" routerLinkActive="active">
+      <mat-icon aria-hidden="false" aria-label="Add User Icon"
+        >table_chart</mat-icon
+      >
+      Tài sản
+    </a>
+  </li>
+
+  <button class="accordion sub-menu">
+    <mat-icon aria-hidden="false" aria-label="Add User Icon">view_list</mat-icon
+    ><span style="font-size: 0.8125rem; margin-top: 3px">Danh mục</span>
+  </button>
+  <div class="panel">
+    <ul class="list">
+      <li>
+        <a
+          routerLink="/admin/units"
+          routerLinkActive="active"
+          class="sub-menu"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon aria-hidden="false" aria-label="Add User Icon"
+            >table_chart</mat-icon
+          >
+          <span style="margin-top: 3px">Đơn vị tính</span>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/admin/plan-list"
+          routerLinkActive="active"
+          class="sub-menu"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon aria-hidden="false" aria-label="Add User Icon"
+            >table_chart</mat-icon
+          >
+          <span style="margin-top: 3px"> Kế hoạch theo năm</span>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/admin/suppliers"
+          routerLinkActive="active"
+          class="sub-menu"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon aria-hidden="false" aria-label="Add User Icon"
+            >table_chart</mat-icon
+          >
+          <span style="margin-top: 3px"> Nhà cung cấp</span>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/admin/product-types"
+          routerLinkActive="active"
+          class="sub-menu"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon aria-hidden="false" aria-label="Add User Icon"
+            >table_chart</mat-icon
+          >
+          <span style="margin-top: 3px"> Phân loại sản phẩm</span>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/admin/currencies"
+          routerLinkActive="active"
+          class="sub-menu"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon aria-hidden="false" aria-label="Add User Icon"
+            >table_chart</mat-icon
+          >
+          <span style="margin-top: 3px"> Loại tiền tệ</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</ul>

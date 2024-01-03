@@ -1,0 +1,25 @@
+<div class="wrapper">
+  <div class="container">
+      <h1>Đăng nhập</h1>
+
+      <mat-card class="form">
+          <mat-form-field class="form-field">
+              <input matInput placeholder="Email" autocomplete="off" [(ngModel)]="email" email required />
+              <mat-error style="color: red; font-size: small">Invalid email address</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field">
+              <input matInput placeholder="Password" type="password" required [(ngModel)]="password" />
+              <mat-error style="color: red; font-size: small">Please input password</mat-error>
+          </mat-form-field>
+
+          <button mat-raised-button class="btn-login btn btn-primary" color="primary" (click)="login(email, password)" [disabled]="isLoggingIn">
+              <span *ngIf="!isLoggingIn">Đăng nhập</span>
+              <span *ngIf="isLoggingIn">Đang xử lý...</span>
+          </button>
+          <a mat-button (click)="openForgotPasswordModal()">Quên mật khẩu</a>
+      </mat-card>
+  </div>
+</div>
+
+
